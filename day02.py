@@ -5,6 +5,8 @@ if n >= 2:
         if n % i == 0:
             is_prime = False  #count = count + 1
             break
+        print(i, end=' ')
+
 else:
     is_prime = False
 
