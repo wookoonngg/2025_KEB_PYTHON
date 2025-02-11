@@ -1,6 +1,18 @@
 # Assignment Day 02
-# v1.3) Rewrite the code using the power function instead of the ** operator.
 # v1.4) Make my_pow custom function instead of ** operator, power function and make it work.
+
+def my_pow(b, e) -> float:
+    """
+    A user-defined function that receives a base and exponent and returns the power result in the form of a real number
+    :param b: base number
+    :param e: exponent
+    :return: the power result in the form of a real number
+    """
+    result = 1
+    for k in range(e):
+        result = result * b
+    return result
+
 
 def is_prime(num) -> bool:
     """
@@ -10,8 +22,8 @@ def is_prime(num) -> bool:
     """
     if num >= 2:
         i = 2
-        #while i < (int(num ** 0.5) + 1):
-        while i < (int(pow(num, 0.5)) + 1):
+        #while i < (int(my_pow(num, 0.5)) + 1):
+        while i*i < num+1:
             if num % i == 0:
                 return False
             i = i + 1
@@ -19,6 +31,8 @@ def is_prime(num) -> bool:
         return False
     return True
 
+
+#print(my_pow(2, 9))
 numbers = input("Input number : ").split()  # ex) 900 1000
 n1 = int(numbers[0])
 n2 = int(numbers[1])
