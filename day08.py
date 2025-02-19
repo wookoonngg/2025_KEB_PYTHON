@@ -236,6 +236,7 @@ if __name__ == "__main__":
     while True:
         # 지우고자 하는 애가 현재 데이터랑 같은 경우 즉 지울 애를 찾았을 때
         if deleteName == current.data:
+
             # 근데 지우고자 하는 애가 자식이 없느 경우
             if current.left == None and current.right == None:
                 if parent.left == current:
@@ -244,7 +245,9 @@ if __name__ == "__main__":
                     parent.right = None
                 del (current)
 
-            elif current.left != None and current.right == None: # 자식이 왼쪽에 붙어있는 경우
+
+            # 자식이 왼쪽에 붙어있는 경우
+            elif current.left != None and current.right == None:
                 if parent.left == current:
                     parent.left = current.left
                 else:
@@ -263,9 +266,26 @@ if __name__ == "__main__":
             break
 
             # 지우려고 하는 애가 자식이 둘다 있을 때
-          #  elif current.right!=None and current.left != None:
+            else:
+                successor = current.right
+                successor_parent = current
+                while successor.left is not None:
+                    successor_parent = successor
+                    successor = successor.left
 
+            # 더 작은 노드 값을 현재 노드 current로 들고옴
+                current.data = successor.data
 
+            # 오른쪽 애 삭제 , 왜 더 작은애니까
+                if successor_parent.left == successor:
+                    successor_parent.left = successor.right
+                else:
+                    successor_parent.right = successor.right
+
+            print(deleteName, "이(가) 삭제됨.")
+
+        else:
+            print(deleteName, "이 트리에 없음")
 
 
 
