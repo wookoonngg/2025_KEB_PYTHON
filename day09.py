@@ -69,6 +69,7 @@
     #         current = current.right
 
 
+
 class Graph:
 	def __init__(self, size) :
 		self.SIZE = size
@@ -95,57 +96,77 @@ def print_graph(g) :
 # 처음에 current 가 0으로 시작
 # 크루스컬 알고리즘
 
-def dfs(g, current, find_vtx, visited):
-    visited.append(current)
-    if current == find_vtx:
-        return True # 처음에 버텍스 찾으면 그냥 바로 true 리턴
-    for vertex in range (g.SIZE):
-        if g.graph[current][vertex] !=0 and vertex not in visited: # 간선이 없거나 방문한 노드가 아닌 애들
-            if dfs(g,vertex,find_vtx, visited):
-                return
+#과제 : dfs를 재귀나 스택을 사용하지 말고 queue 를 사용하여 코드를 작성해보아라
+# queue 에 순차적으로 append 하고 queue가 다 정리가 되면 while문 finish
 
 
+from collections import deque
 
 
+def dfs (g, current, find_vtx, visited) :
+    queue = deque() # 일단 큐를 만들어양함
+    visited = [] # 방문한 애들 모아두는 배열 일단 만들긴하는데 아래 만들었는데 또만들어야되나? 전역변수 쓰긴 에바임
 
-def find_vertex(g, find_vtx) -> bool:
+    queue.append(start) #시작노드를 걍 current =0 해서 current로 넣는 것도 ㄱㅊ을 지도
+
+    while queue:
+        current = queue.pop() # 나중에 들어온게 먼저 나감 그래서 current 값 먼저 pop
+
+        if current not in visited:
+           visited.append(current) # 왜 빨간줄이냐 -> 줄맞춤 에러~ ㅅㄱ
+
+        for next in range(len(g[current])): # 이거 반대로 돌려야되나? 몰루 어케 반대로 돌림? 몰루몰루몰루 몰루
+            if g[current][next] != 0 and next not in visited:
+                queue.append(next)
+
+    return visited # 까먹을뻔~
 
 
+def find_vertex(g, find_vtx):
+    visited = []
+    return dfs(g, 0, find_vtx, visited)
 
 
+# dfs를 활용한 find vertex
 
+# def dfs(g, current, find_vtx, visited):
+#     visited.append(current)
+#     if current == find_vtx:
+#         return True
+#     for vertex in range(g.SIZE):
+#         if g.graph[current][vertex] != 0 and vertex not in visited:
+#             if dfs(g, vertex, find_vtx, visited):
+#                 return True
+#     return False
 
+# 스택을 활용한 find_vertex함수
 
-
-
-
-
-	# stack = []
-	# visited_ary = []
+    # stack = []
+    # visited_ary = []
     #
-	# current = 0 # 현재 0부터 돌기 시작
-	# stack.append(current) # 스택에 0 노드를 저장
-	# visited_ary.append(current) # visited arr 에 0 (서울)을 저장한거다 -> 서울만 일단 방문한 도시가 된거임 하고 밑에 while문 내려가면
+    # current = 0 # 현재 0부터 돌기 시작
+    # stack.append(current) # 스택에 0 노드를 저장
+    # visited_ary.append(current) # visited arr 에 0 (서울)을 저장한거다 -> 서울만 일단 방문한 도시가 된거임 하고 밑에 while문 내려가면
     #
-	# while len(stack) != 0: # 스택에 모든것이 pop 될 때까지 -> 모든것을 다 돌고 next가 none 된 상태임
-	# 	next = None
-	# 	for vertex in range(g_size) : # 모든 노드들을 도는데
-	# 		if g.graph[current][vertex] != 0 :
-	# 			if vertex in visited_ary : # 처음에 0 들어온거는 앞에서 visit에 저장했으니까 여기 if문 pass ->
-	# 				pass # 현재 노드가 방문한 지점이라는게 보이면 (스택을 통해 확인하는 것) -> visited arr이면 넘어감
-	# 			else :
-	# 				next = vertex  # visited arr에 없으면 그 노드가 next 가 됨 -> 바로 밑에 if문에 걸려서 스택,visited arr 에 append
-	# 				break
-	# 	if next is not None:
-	# 		current = next
-	# 		stack.append(current)
-	# 		visited_ary.append(current)
-	# 	else :
-	# 		current = stack.pop() # current++; ???
-	# if find_vtx in visited_ary :
-	# 	return True
-	# else :
-	# 	return False
+    # while len(stack) != 0: # 스택에 모든것이 pop 될 때까지 -> 모든것을 다 돌고 next가 none 된 상태임
+    # 	next = None
+    # 	for vertex in range(g_size) : # 모든 노드들을 도는데
+    # 		if g.graph[current][vertex] != 0 :
+    # 			if vertex in visited_ary : # 처음에 0 들어온거는 앞에서 visit에 저장했으니까 여기 if문 pass ->
+    # 				pass # 현재 노드가 방문한 지점이라는게 보이면 (스택을 통해 확인하는 것) -> visited arr이면 넘어감
+    # 			else :
+    # 				next = vertex  # visited arr에 없으면 그 노드가 next 가 됨 -> 바로 밑에 if문에 걸려서 스택,visited arr 에 append
+    # 				break
+    # 	if next is not None:
+    # 		current = next
+    # 		stack.append(current)
+    # 		visited_ary.append(current)
+    # 	else :
+    # 		current = stack.pop() # current++; ???
+    # if find_vtx in visited_ary :
+    # 	return True
+    # else :
+    # 	return False
 
 # 여기까지 함수 find vtx
 
