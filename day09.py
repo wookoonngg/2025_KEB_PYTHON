@@ -103,7 +103,27 @@ def print_graph(g) :
 from collections import deque
 
 
-def dfs (g, current, find_vtx, visited) :
+# 너비 어쩌고로 만든 dfs
+def dfs_bfs (graph, start):
+    queue = deque([start])  # 시작 노드 일단 큐에 넣어놓고 시작
+    visited = [] # 얘도 일단 방문 노드 저장 고악ㄴ
+
+    while queue:
+        current = queue.popleft()  # 먼저들어간게 먼저 나가니까 왼쪽에 있는 놈 pop
+
+        if current not in visited: # 방문 노드가 아니면
+            visited.append(current)  # 바로 추가
+
+            for next in range(len(graph[current])):
+
+                if graph[current][next] != 0 and next not in visited:
+                    queue.append(next)  # 들여쓰기 미친
+
+    return visited
+
+
+ # queue로 만든 dfs
+def dfs_queue (g, current, find_vtx, visited) :
     queue = deque() # 일단 큐를 만들어양함
     visited = [] # 방문한 애들 모아두는 배열 일단 만들긴하는데 아래 만들었는데 또만들어야되나? 전역변수 쓰긴 에바임
 
@@ -124,7 +144,7 @@ def dfs (g, current, find_vtx, visited) :
 
 def find_vertex(g, find_vtx):
     visited = []
-    return dfs(g, 0, find_vtx, visited)
+    return dfs_queue(g, 0, find_vtx, visited)
 
 
 # dfs를 활용한 find vertex
