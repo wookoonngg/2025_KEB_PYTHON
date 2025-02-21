@@ -116,7 +116,7 @@ def dfs_bfs (graph, start):
 
             for next in range(len(graph[current])):
 
-                if graph[current][next] != 0 and next not in visited:
+                if graph[current][next] != 0 and next not in visited:   
                     queue.append(next)  # 들여쓰기 미친
 
     return visited
